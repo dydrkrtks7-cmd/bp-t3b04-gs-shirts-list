@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>글 목록 (1/3) · t3b04-gs-shirts-list</title>
+  <meta name="description" content="t3b04-gs-shirts-list에 올라온 글 목록입니다.">
+  <link rel="canonical" href="https://gangseo-shirt-guide.hardcoreroom.com/posts.html">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <style>
+        :root {
+            --bg-color: #08090d;
+            --main-gradient: linear-gradient(180deg, #08090d 0%, #151119 100%);
+            --card-surface: rgba(255, 255, 255, 0.02);
+            --border-color: rgba(255, 255, 255, 0.04);
+            --text-high: #f5f0f6;
+            --text-low: #938a97;
+            --deep-rose: #fda4af;
+            --glow: rgba(253, 164, 175, 0.12);
+            --font-serif: 'Gowun Batang', serif;
+            --font-sans: 'Inter', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--main-gradient);
+            color: var(--text-high);
+            font-family: var(--font-serif);
+            line-height: 1.85;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 660px;
+            margin: 0 auto;
+            padding: 90px 24px;
+            width: 100%;
+        }
+
+        .blog-header {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .blog-header::after {
+            content: '';
+            display: block;
+            width: 35px;
+            height: 1px;
+            background: var(--deep-rose);
+            margin: 20px auto 0;
+            opacity: 0.4;
+            box-shadow: 0 0 6px var(--deep-rose);
+        }
+
+        .blog-sub {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            color: var(--deep-rose);
+            font-family: var(--font-sans);
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .blog-title {
+            font-size: 1.85rem;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.45;
+            letter-spacing: -0.01em;
+        }
+
+        .blog-date {
+            font-size: 0.85rem;
+            color: var(--text-low);
+            margin-top: 10px;
+            font-family: var(--font-sans);
+        }
+
+        .essay-content {
+            font-size: 1.08rem;
+            color: var(--text-high);
+            text-align: justify;
+        }
+
+        .essay-p {
+            margin-bottom: 28px;
+            text-indent: 10px;
+        }
+
+        .highlight-quote {
+            background: var(--card-surface);
+            border-left: 2px solid var(--deep-rose);
+            padding: 20px 24px;
+            margin: 36px 0;
+            border-radius: 0 8px 8px 0;
+            backdrop-filter: blur(8px);
+            border-top: 1px solid var(--border-color);
+            border-right: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .quote-inner {
+            font-style: italic;
+            color: #fdf2f8;
+            font-size: 1.02rem;
+        }
+
+        .comments {
+            margin-top: 75px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 40px;
+        }
+
+        .comments-label {
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            color: var(--deep-rose);
+            letter-spacing: 0.12em;
+            margin-bottom: 22px;
+            text-transform: uppercase;
+        }
+
+        .comment-node {
+            background: var(--card-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 18px;
+            margin-bottom: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .comment-node:hover {
+            border-color: rgba(253, 164, 175, 0.22);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        .comment-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-family: var(--font-sans);
+            font-size: 0.8rem;
+        }
+
+        .author-name {
+            font-weight: 500;
+            color: #ffffff;
+        }
+
+        .post-time {
+            color: var(--text-low);
+        }
+
+        .stars {
+            color: var(--deep-rose);
+            font-size: 0.75rem;
+            margin-top: 2px;
+        }
+
+        .text-body {
+            font-size: 0.92rem;
+            color: var(--text-high);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 35px 24px;
+            border-top: 1px solid var(--border-color);
+            font-family: var(--font-sans);
+            font-size: 0.75rem;
+            color: var(--text-low);
+            letter-spacing: 0.05em;
+        }
+
+        .rose-glow {
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, var(--glow) 0%, transparent 70%);
+            top: -80px;
+            left: 50%;
+            transform: translateX(-50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 16px;
+            }
+
+            .blog-title {
+                font-size: 1.55rem;
+            }
+
+            .essay-content {
+                font-size: 1.02rem;
+            }
+        }
+    </style>
+  <meta property="og:title" content="글 목록 (1/3) · t3b04-gs-shirts-list">
+  <meta property="og:description" content="t3b04-gs-shirts-list에 올라온 글 목록입니다.">
+  <meta property="og:url" content="https://gangseo-shirt-guide.hardcoreroom.com/posts.html">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
+</head>
+<body>
+  <div class="container">
+    <header class="blog-header">
+            <div class="rose-glow"></div>
+            <div class="blog-sub">ALLEY WAY MEMORY</div>
+            <div class="blog-title">오래된 주택가 붉은 벽돌 담 너머 번지는 은은한 네온의 수필</div>
+            <div class="blog-date">2026. 05. 27</div>
+        </header>
+    <main>
+      <h1>글 목록</h1>
+      <p>전체 41개 · 1/3 페이지</p>
+      <ul class="post-list">
+      <li class="post-item">
+        <a class="post-item__link" href="posts/compare-002-110diia.html">강서 셔츠룸 모음</a>
+        <p class="post-item__summary">강서 지역에는 다양한 테마와 규모를 갖춘 셔츠룸이 모여 있어 방문객이 원하는 분위기를 쉽게 찾을 수 있습니다. 각 업장은 기본적으로 쾌적한 실내 환경과 편안한 좌석을 제공하며, 개인 또는 단체 이용</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260705-035.html">마포 소셜 공간： 인디 소셜 라운지 가이드 아지트 같은 이색 라운지 추천</a>
+        <p class="post-item__summary">상업적인 분위기에서 벗어나 잔잔한 인디 밴드의 음악과 영감을 나누고 싶은 문화 애호가들에게 추천합니다. 친환경 원두로 내린 핸드드립 커피와 내추럴 와인을 합리적으로 곁들이며 아티스트들과 담소를 나눌</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260719-0312.html">강서 셔츠룸 모음 및 마포 홍대 단체 가라오케 예약 가이드</a>
+        <p class="post-item__summary">최근 강서 셔츠룸 모음 정보를 활용해 마포와 홍대 일대의 업장을 탐색하는 분들이 늘고 있습니다. 특히 단체로 방문할 때는 가라오케의 접근성과 위치를 가장 먼저 고려해야 합니다. 대중교통 이용 가능 </p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260719-0313.html">강서 셔츠룸 모음 활용한 정보 페이지 전략</a>
+        <p class="post-item__summary">디지털 마케팅 환경에서 갑작스러운 유입량 감소를 경험하면 대다수는 당혹감을 감추지 못합니다. 특정 키워드에 의존하다가 검색 엔진의 정책 변화로 인해 순위가 급락하는 사례는 비일비재하며 이는 검색엔진</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260719-0314.html">강서 셔츠룸 모음 분석을 통한 마포 단체 회식용 대형 룸 노래방 가격 정보 확인</a>
+        <p class="post-item__summary">비즈니스 회식은 무조건 비싸고 화려해야 한다는 생각은 흔한 오해 중 하나입니다. 실제로는 인원 규모와 모임의 목적에 맞는 공간을 선별하는 안목이 더욱 중요하며 이는 전체 예산을 효율적으로 운용하는 </p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260719-0315.html">강서 셔츠룸 모음 참고 시 마포 셔츠룸 예약 시 눈탱이 피하는 법 가이드</a>
+        <p class="post-item__summary">예약 과정에서 투명한 정찰제 운영, 상세한 이용 내역 안내, 그리고 사후 관리 시스템이 충족되어야 안전한 이용이 가능합니다. 초행길에 나서는 소비자들은 정보의 비대칭성 때문에 피해를 보는 경우가 많</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260719-0316.html">강서 셔츠룸 모음 리스트 활용한 마포 럭셔리 단체 가라오케 예약 가이드 전략</a>
+        <p class="post-item__summary">당신은 VIP 단체 모임을 기획하며 과연 어떤 곳이 진정한 품격을 갖추고 있는지 고민해 보신 적 있습니까. 화려한 외관만큼이나 중요한 것은 내부의 서비스 품질과 운영의 안정성입니다. 장소의 명성보다</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260719-0317.html">강서 셔츠룸 모음 활용하여 안전하게 즐기는 셔츠룸 예약 절차 가이드</a>
+        <p class="post-item__summary">주말 저녁 시간을 활용해 여가를 즐기려는 이들이 늘어나면서 강서 셔츠룸 모음 정보를 찾는 발길이 분주합니다. 단순히 업소를 나열하는 것보다는 자신에게 맞는 환경을 찾기 위한 체계적인 준비 과정이 필</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260719-0318.html">강서 셔츠룸 모음 데이터와 비교하는 마포 코인노래방 방음 시설 비교 가이드</a>
+        <p class="post-item__summary">일상에서 즐거움을 찾기 위해 강서 셔츠룸 모음 같은 정보나 프라이빗한 엔터테인먼트 시설을 탐색하는 이들이 많습니다. 특히 노래를 즐기는 사람들에게 방음 시설은 선택의 최우선 순위가 되며, 이는 전체</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260719-0319.html">강서 셔츠룸 모음 활용 시 실수하기 쉬운 부분과 셔츠룸 사이트 이용법</a>
+        <p class="post-item__summary">많은 이들이 강서 셔츠룸 모음 정보를 검색하지만, 막상 원하는 곳을 예약하는 단계에서 낭패를 보는 경우가 적지 않습니다. 가장 흔한 실패는 신뢰할 수 없는 출처의 정보만 믿고 무작정 방문을 시도하는</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260719-0320.html">강서 셔츠룸 모음 검색 결과를 보완하는 구글 신뢰 지수 모발이식 솔루션 분석</a>
+        <p class="post-item__summary">인터넷 정보의 홍수 속에서 강서 셔츠룸 모음처럼 특정 분야를 탐색할 때, 검색 알고리즘이 제시하는 신뢰도는 매우 중요한 지표가 됩니다. 이는 단순히 순위가 높은 것을 의미하는 것이 아니라, 사용자가</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260719-0321.html">강서 셔츠룸 모음 찾아보다 지친 당신을 위한 동대문 마사지 안내</a>
+        <p class="post-item__summary">바쁜 도심의 일정을 마치고 나면 누구나 지친 몸을 이끌고 쉴 곳을 찾게 됩니다. 간혹 강서 셔츠룸 모음 정보를 검색하며 밤의 유흥을 고민하다가도, 정작 필요한 것은 온전한 신체의 회복이라는 사실을 </p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260719-0322.html">강서 셔츠룸 모음 검색보다 중요한 마포 홍대 로컬 럭셔리 밤문화 가이드</a>
+        <p class="post-item__summary">많은 이들이 밤문화에 대해 막연한 오해를 가지고 있습니다. 흔히 강서 셔츠룸 모음 리스트를 따라가면 무조건적인 만족을 얻을 수 있다고 믿지만, 실상은 장소마다 지향하는 서비스의 성격이 전혀 다릅니다</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260719-0323.html">강서 셔츠룸 모음 대신 참고하는 합정 셔츠룸 단골들이 뽑은 핫플 매거진</a>
+        <p class="post-item__summary">어떤 장소가 핫플레이스로 자리 잡기 위해서는 몇 가지 필수 조건이 충족되어야 합니다. 단순히 시설이 좋다는 사실만으로는 부족하며, 이용 인원 구성에 따른 맞춤형 서비스가 뒷받침되어야 합니다. 많은 </p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260719-0324.html">강서 셔츠룸 모음 마케팅보다 확실한 도메인 지수 탈모 방지 및 앵커 텍스트 이식 가이드</a>
+        <p class="post-item__summary">인터넷상의 수많은 정보 속에서 당신이 찾고자 하는 것은 무엇입니까? 단순히 강서 셔츠룸 모음 같은 키워드만 쫓고 있다면, 정작 중요한 온라인상의 가치를 놓치고 있는 것은 아닌지 되돌아볼 필요가 있습</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260719-0325.html">강서 셔츠룸 모음 활용한 마포 셔츠룸 리얼 후기 소셜 마케팅 가이드 핵심 요약</a>
+        <p class="post-item__summary">정보의 홍수 속에서 특정 업체를 선정할 때는 다각적인 검증 과정이 반드시 필요합니다. 강서 셔츠룸 모음 정보를 활용하여 신뢰도 있는 데이터를 확보하는 것이 첫 단계입니다. 무분별한 광고성 글보다는 </p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260721-0336.html">강서 셔츠룸 모음 살펴보기: 구글 봇 정밀 검진 및 크롤 버짓 밀착 간호 지침</a>
+        <p class="post-item__summary">웹사이트의 효율적인 운영을 위해 강서 셔츠룸 모음 정보를 다루는 페이지들의 접근성을 분석하는 것은 매우 중요합니다. 특히 검색 엔진의 최적화 수준은 해당 정보가 얼마나 많은 사용자에게 도달하는지를 </p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260721-0337.html">강서 셔츠룸 모음 활용하는 고신용 도메인 보증 카드 발급 전략과 주의점</a>
+        <p class="post-item__summary">웹사이트를 운영하다 보면 갑작스러운 신용도 하락으로 인해 트래픽 확보에 어려움을 겪는 경우가 빈번하게 발생합니다. 마치 특정 지역의 정보를 찾는 과정에서 강서 셔츠룸 모음 정보를 확인하듯, 체계적인</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260721-0338.html">강서 셔츠룸 모음 기반 구글 인덱싱 속도 초고속 광회선 대역폭 최적화 기술</a>
+        <p class="post-item__summary">많은 이들이 콘텐츠만 많이 올리면 검색 엔진이 알아서 빠르게 인덱싱할 것이라는 오해를 가지고 있습니다. 강서 셔츠룸 모음 관련 정보를 제공하는 웹사이트조차도 기술적인 인프라가 뒷받침되지 않으면 무용</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260722-0221.html">강서 셔츠룸 모음 살펴보기 전 확인하는 망원 노래방 추천정보 가이드</a>
+        <p class="post-item__summary">주변 유흥 문화를 탐색하다 보면 강서 셔츠룸 모음 정보와 같은 다양한 자료를 접하게 됩니다. 많은 분이 이런 자료를 바탕으로 망원 노래방 추천정보를 찾고 싶어 하지만, 정작 신뢰할 수 있는 정보를 </p>
+      </li>
+      </ul>
+    <nav class="pager">
+      <span class="pager__current">1</span>
+      <a class="pager__link" href="posts-2.html">2</a>
+      <a class="pager__link" href="posts-3.html">3</a>
+    </nav>
+    </main>
+  </div>
+</body>
+</html>
